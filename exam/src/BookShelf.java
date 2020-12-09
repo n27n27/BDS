@@ -1,3 +1,7 @@
+class Book
+{
+	
+}
 
 public class BookShelf
 {
