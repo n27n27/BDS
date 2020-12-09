@@ -3,6 +3,11 @@ class Book
 	
 }
 
+class Magazine extends Book
+{
+	
+}
+
 public class BookShelf
 {
 
