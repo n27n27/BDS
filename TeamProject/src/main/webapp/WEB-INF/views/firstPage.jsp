@@ -114,7 +114,7 @@
 	 	<div id = content1>
 			 Big Data Science 세계를 이끌어갑니다
 		</div><br>
-		<div id = content3> <img src="./img/ab.png" alt="My Image"></div><br>		
+		<div id =content3> <img src="./img/ab.png" alt="My Image"></div><br>		
 		<div id =content2><a href='main'>You can experience Data World.</a></div>
 	</div>
 	<hr>

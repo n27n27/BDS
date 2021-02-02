@@ -55,7 +55,7 @@
 			text-align:center;		
 		}
 		
-		a{
+		a, a:link, a:visited, a:hover{
 		text-decoration:none;
 		color:black;
 		}
@@ -74,7 +74,9 @@
 <body>
 	<div id=wrap>
 		<div id=header>
-			<div id="write27" ><a href='main'><img src='./img/home.png' width=20px>BDS</a></div>
+			<div id="write27" >
+				<a href='main'><img src='./img/home.png' width=20px>BDS</a>
+			</div>
 			<div class="write27">
 				<c:set var="hid" value="<%= (String)session.getAttribute(\"id\") %>" />
 				<c:choose>
@@ -91,52 +93,47 @@
 			</div>
 	 	</div><br><br>
 	 	<hr>
-	 	<div id='middle'>
-	 		<form action="fWrite.fo" id="reg_frm" method="post" enctype="multipart/form-data">
-		<table class="table">
-			<tr>
-      			<th scope="row" width ="10%">작성자</th>
-      			<td><input id="bName" type="text" name="bName" size = "20%"></td>
-      		</tr>
-      		
-    		<tr>
-      			<th scope="row" width ="10%">비밀번호</th>
-      			<td>
-      				<input type="password" name="pw" size = "20%">
-      				&nbsp;
-      				<input type='radio' name="choice"> 공개
-      				<input type='radio' name="choice" checked> 비공개
-      			</td>
-      			
-      			
-      		</tr>
-    		<tr>
-      			<th scope="row" width ="10%">제목</th>
-      			<td><input type="text" id="bTitle" name="bTitle" size = "100%"></td>
-      		</tr>
-      		<tr>
-      			<th scope="row" width ="10%">파일첨부</th>
-      			<td>
-      				<input type="file" name="filename" class=btn >      				
-      			</td>
-      		</tr>
-      	
-	    	<tr>
-    			<th scope="row" width ="10%">내용</th>
-      			<td>
-      				<textarea name="bContent" id="bContent" rows="10" style="width:100%" ></textarea>
-      				<script>
-                        CKEDITOR.replace( 'bContent' );
-                </script>
-      			</td>     
-    		</tr>
-    	</table>
-    	<div class="write28">
-			<input type="button" onclick="form_check();" class="btn btn-dark" value="글쓰기">
-			<button type="button" onclick="location.href = 'fList.fo';" class="btn btn-dark">취소</button>
-		</div>	
-    	</form>
-    		
+	 	<div id='middle'>	 	
+	 		<form action="rWriteOk" id="reg_frm" method="post"  enctype="multipart/form-data"> 
+				<table class="table">
+					<tr>
+		      			<th scope="row" width ="10%">작성자</th>
+		      			<td><input id="rname" type="text" name="rname" size ="20%"></td>
+		      		</tr>		      		
+		    		<tr>
+		      			<th scope="row" width ="10%">비밀번호</th>
+		      			<td>
+		      				<input type="password" id="rpwd" name="rpwd" size = "20%">
+		      				&nbsp;
+		      				<input type='radio' name="choice" value='1'> 공개
+		      				<input type='radio' name="choice" value='0' checked> 비공개
+		      			</td>		      			
+		      		</tr>
+		    		<tr>
+		      			<th scope="row" width ="10%">제목</th>
+		      			<td><input type="text" id="rtitle" name="rtitle" size = "100%"></td>
+		      		</tr>
+		      		<tr>
+		      			<th scope="row" width ="10%">파일첨부</th>
+		      			<td>
+		      				<input type="file" id="rfroot" name="rfroot" class=btn >      				
+		      			</td>
+		      		</tr>		      	
+			    	<tr>
+		    			<th scope="row" width ="10%">내용</th>
+		      			<td>
+		      				<textarea name="rcontent" id="rcontent" rows="10" style="width:100%"></textarea>
+		      				<script>
+		                        CKEDITOR.replace('rcontent');
+		                </script>
+		      			</td>     
+		    		</tr>
+		    	</table>
+    			<div class="write28">
+					<input type="submit" class="btn btn-dark" value="글쓰기">
+					<button type="button" onclick="location.href = 'rBoard';" class="btn btn-dark">취소</button>
+				</div>	
+    		</form>    		
 	 	</div>
 	 	<br>
 	 	<br>

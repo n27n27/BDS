@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http:mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.study.dao.iRBoardDao">
+	<select id = "list" resultType="com.example.study.dto.RBoardDto">
+		select * from r_board
+	</select>
+	
+	<select id = "view" resultType="com.example.study.dto.RBoardDto">
+		select * from r_board where rNum = #{rnum}
+	</select>
+	
+	<insert id = "write" parameterType="java.util.HashMap">
+		insert into r_board (rNum, rTitle, rContent, rName, rPwd, rSecret, rdate, rhit, rGroup, rStep, rIndent, rProcessing)
+			values (r_board_seq.nextval, #{rtitle}, #{rcontent}, #{rname}, #{rpwd}, #{rsecret}, sysdate, 0, r_board_seq.currval, 0, 0, 1)
+	</insert>
+	
+	<delete id = "delete">
+		delete from r_board where rNum = #{rnum}
+	</delete>
+	
+	<select id="articleCount" resultType="_int">
+		select count(*) from r_board
+	</select>
+</mapper>

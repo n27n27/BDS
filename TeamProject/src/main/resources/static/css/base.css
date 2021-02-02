@@ -43,7 +43,7 @@ html, body {
 	text-align:center;		
 }
 
-a{
+a, a:link, a:visited, a:hover{
 	text-decoration:none;
 	color:black;
 }

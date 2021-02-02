@@ -104,7 +104,7 @@
 
 				
 			
-			<Context docBase="ThirdProject" path="/ThirdProject" reloadable="true" source="org.eclipse.jst.jee.server:ThirdProject"/><Context docBase="n27_Library" path="/n27_Library" reloadable="true" source="org.eclipse.jst.jee.server:n27_Library"/></Host>
+			<Context docBase="ThirdProject" path="/ThirdProject" reloadable="true" source="org.eclipse.jst.jee.server:ThirdProject"/></Host>
 		</Engine>
 	</Service>
 </Server>

@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,11 +16,7 @@
 			text-align:left;
 			width : 90%;
 			margin : auto;
-		}
-		
-		th{
-			text-align:center;
-		}		
+		}			
 		
 		td{
 			border-bottom: 1px solid;
@@ -33,6 +29,11 @@
 		.right1{
 			float:right;
 		}	
+		
+		a, a:link, a:visited, a:hover{
+			text-decoration:none;
+			color:black;
+		}
 		
 	</style>	
 </head>
@@ -66,22 +67,17 @@
 			<th width=10%>조회수</th>
 			<th width=10%>파일</th>
 		</tr>
+		<c:forEach items="${contents }" var = "dto">		
+			
 		<tr>
-			<td>번호</td>
-			<td>제목</td>
-			<td>작성자</td>
-			<td>작성일</td>
-			<td>조회수</td>
-			<td>파일</td>
+			<td>${dto.rnum }</td>
+			<td><a href="rContent?rnum=${dto.rnum }">${dto.rtitle }</a></td>
+			<td>${dto.rname }</td>
+			<td>${dto.rdate }</td>
+			<td>${dto.rhit }</td>
+			<td>${dto.rfroot }</td>
 		</tr>
-		<tr>
-			<td>번호</td>
-			<td>제목</td>
-			<td>작성자</td>
-			<td>작성일</td>
-			<td>조회수</td>
-			<td>파일</td>
-		</tr>
+		</c:forEach>
 		<tr>
 			<td colspan=6>
 				<div id=set>
@@ -119,7 +115,7 @@
 			</c:otherwise>
 		</c:choose>	
 	<div class="right1">		
-		<button type="button" onclick="location.href = 'fWrite_view.fo';" class="btn btn-dark">글쓰기</button>
+		<button type="button" onclick="location.href = 'rWrite';" class="btn btn-dark">글쓰기</button>
 	</div>
 	<br>
 	 	</div>
