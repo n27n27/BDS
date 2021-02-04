@@ -11,12 +11,29 @@
 		select * from r_board where rNum = #{rnum}
 	</select>
 	
+	<select id = "modifyView" resultType="com.example.study.dto.RBoardDto">
+		select * from r_board where rNum = #{rnum}
+	</select>
+	
+	<insert id = "reply">
+		insert into r_board (rnum, rtitle, rContent, rGroup, rStep, rIndent, rPwd, rSecret, rdate)
+			values (r_board_seq.nextval, #{param1}, #{param2}, #{param3}, #{param4}, #{param5}, #{param6}, #{param7}, sysdate)
+	</insert>
+	
 	<insert id = "write" parameterType="java.util.HashMap">
 		insert into r_board (rNum, rTitle, rContent, rName, rPwd, rSecret, rdate, rhit, rGroup, rStep, rIndent, rProcessing)
 			values (r_board_seq.nextval, #{rtitle}, #{rcontent}, #{rname}, #{rpwd}, #{rsecret}, sysdate, 0, r_board_seq.currval, 0, 0, 1)
 	</insert>
 	
-	<delete id = "delete">
+	<insert id = "modify" parameterType="java.util.HashMap">
+		update r_board set rTitle = #{rtitle}, rContent = #{rcontent}, rPwd = #{rpwd}, rSecret = #{rsecret}, rdate = sysdate where rNum = #{rnum}
+	</insert>
+	
+	<insert id = "upHit" parameterType="java.util.HashMap">
+		update r_board set rhit = rhit + 1 where rnum = #{rnum}
+	</insert>
+	
+	<delete id = "delete" parameterType="java.util.HashMap">
 		delete from r_board where rNum = #{rnum}
 	</delete>
 	

@@ -6,8 +6,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link href="./bootstrap.min.css" rel="stylesheet">
 <title>BDS</title>
+	<link href="./bootstrap.min.css" rel="stylesheet">
+	<script src="http://code.jquery.com/jquery.js"></script>
+	<script src="https://cdn.ckeditor.com/4.15.1/standard/ckeditor.js"></script>
 	<style>			
 		
 		html, body {
@@ -84,7 +86,37 @@
 			</div>
 	 	</div><br><br>
 	 	<hr>
-	 	
+	 	<div id="middle">
+	 		<form action="fReply.fo" id="reg_frm" method="post">
+		<table class="table">
+			<input type="hidden" name="bNum" value="${freply_view.bNum }">
+			<input type="hidden" name="bGroup" value="${freply_view.bGroup }">
+			<input type="hidden" name="bStep" value="${freply_view.bStep }">
+			<input type="hidden" name="bIndent" value="${freply_view.bIndent }">
+		
+      		<tr>
+      			<th scope="row" width ="10%">제목</th>
+      			<td><input type="text" id="bTitle" name="bTitle" size = "100%"></td>
+      		</tr>
+	    	<tr>
+    			<th scope="row" width ="10%">내용</th>
+      			<td>
+      				<textarea name="bContent" id="bContent" rows="10" style="width:100%" ></textarea>
+      				<script>
+                        CKEDITOR.replace( 'bContent' );
+                </script>
+      			</td>     
+    		</tr>
+    		<tr>
+				<td colspan="2">
+				<input type="button" onclick="form_check();" class="btn btn-dark" value="답변">
+				<button type="button" onclick="location.href = 'fList.fo?page=<%= session.getAttribute("cpage") %>';" class="btn btn-dark">목록</button>
+				</td>				
+			</tr>
+    	</table>
+    	
+    </form>
+	 	</div>
 	 	<hr>
 	 	<div id="footer">
 	 		<address>03189 서울 종로구 삼일대로17길 51

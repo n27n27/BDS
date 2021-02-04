@@ -94,7 +94,7 @@
 			</div>
 	 	</div><br><br>
 	 	<hr>
-	 	<div id='middle'>
+	 	<div id='middle'>	 		
 	 		<table class="table">
 		<tr>
       		<th scope="row" width ="22%">작성자</th>
@@ -193,8 +193,11 @@
     		<input type="submit" value="전송" class="btn btn-dark">
     		&nbsp;&nbsp;
     		    		    		    		
-    	</form>
+    	</form>    		
     		<input type="button" value="목록" onClick="location.href='/rBoard'"class="btn btn-dark">
+    		<input type="button" value="답변" onClick="location.href='/replyView?rnum=${dto.rnum}'"class="btn btn-dark">
+    		<input type="button" value="수정" onClick="location.href='/rModify?rnum=${dto.rnum}'"class="btn btn-dark">
+    		<input type="button" value="삭제" onClick="location.href='/delete?rnum=${dto.rnum}'"class="btn btn-dark">
     	</div>
 	 	</div>
 	 	<hr>

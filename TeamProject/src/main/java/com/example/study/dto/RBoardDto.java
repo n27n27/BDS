@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import lombok.Data;
 
@@ -20,7 +21,10 @@ public class RBoardDto
 	private String rname;
 	private Timestamp rdate;	
 	private String rpwd;
-	private int rsecret;
+	@NotNull(message = "passwrod is null.")
+	@NotEmpty(message = "passwrod is empty.")
+	@Size(max=4, message = "password is less than 5.")
+	private String rsecret;
 	private int rhit;
 	private int rgroup;
 	private int rstep;

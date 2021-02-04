@@ -53,16 +53,22 @@
 			text-align:center;		
 		}
 		
+		a, a:link, a:visited, a:hover{
+		text-decoration:none;
+		color:black;
+		}
+		
+		.pm1{		
+			text-align:center;
+		}
+		
+				
 		#middle{
 			width:85%;
 			margin:auto;
 		}
 		
-		a{
-		text-decoration:none;
-		color:black;
-		}
-	</style>	
+	</style>		
 </head>
 <body>
 	<div id=wrap>
@@ -84,7 +90,51 @@
 			</div>
 	 	</div><br><br>
 	 	<hr>
-	 	
+	 	<div id='middle'>
+	 	<form>
+	 		<table class="table">
+		<tr>
+      		<th scope="row" width ="22%">작성자</th>
+      		<td width="22%">${dto.rname }</td>
+      		<th scope="row" width ="22%">조회수</th>
+      		<td width="22%">${dto.rhit }</td>
+      	</tr>    	
+    		<tr>
+      			<th scope="row" width ="10%">등록일</th>
+      			<td>${dto.rdate}</td>
+      			
+      			<th scope="row" width ="10%">첨부파일</th>
+      			<c:choose>
+					<c:when test = "${dto.rfroot != null }">
+						파일경로							
+					</c:when>
+					<c:otherwise>
+						<td></td>	
+					</c:otherwise>
+				</c:choose>      			
+      		</tr>	    	
+    		<tr>
+    			<th scope="row" width ="50%" colspan="2">제목</th>
+      			<td width ="50%" colspan="2">${dto.rtitle}</td>     
+    		</tr>
+    		<tr>
+    			<th scope="row" colspan="4">내용</th>      			     
+    		</tr>
+    		<tr>
+    			<td colspan="4" height = 300>
+    			${dto.rcontent}    			  				
+    			</td>      			     
+    		</tr>   		
+    	</table>
+    	
+    	<div class=pm1>
+    		<input type="submit" value="수정" class="btn btn-dark">
+    		<input type="button" value="취소" onClick="location.href='/rBoard'"class="btn btn-dark">
+    	</div>
+    	</form>	
+    		
+    	
+	 	</div>
 	 	<hr>
 	 	<div id="footer">
 	 		<address>03189 서울 종로구 삼일대로17길 51

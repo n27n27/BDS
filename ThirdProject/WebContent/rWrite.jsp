@@ -110,7 +110,7 @@
       			
       			
       		</tr>
-    		<tr>
+    		<tr>	
       			<th scope="row" width ="10%">제목</th>
       			<td><input type="text" id="bTitle" name="bTitle" size = "100%"></td>
       		</tr>
