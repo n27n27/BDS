@@ -1,0 +1,49 @@
+@charset "UTF-8";
+		
+html, body {
+	position: relative;
+	height: 100%;
+  	}
+		
+#wrap{
+	width:90%;
+}
+
+#header{
+	font-size:1.5em;
+	margin: 10px auto;
+	padding: 10px auto;
+}
+		
+.write27 {
+	text-shadow:5px 8px 10px black;
+	float:right;
+}
+		
+.wrap27 {			
+	width:90%;
+	margin: 0 auto;
+}		
+			 
+#write27 {
+	float:left;			
+}				
+
+#wrap {
+	width:90%;
+	margin: 0 auto;
+}		
+
+.menu1{
+	display:inline-block;
+	margin: 0 10px;			
+}
+
+#footer{
+	text-align:center;		
+}
+
+a, a:link, a:visited, a:hover{
+	text-decoration:none;
+	color:black;
+}

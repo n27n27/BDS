@@ -75,9 +75,10 @@
 	<div id=wrap>
 		<div id=header>
 			<div id="write27" >
-				<a href='main'><img src='./img/home.png' width=20px>BDS</a>
+				<a href='./main'><img src='./img/home.png' width=20px>BDS</a>
 			</div>
 			<div class="write27">
+				<div class=menu1><a href="./first">Intro</a></div>
 				<c:set var="hid" value="<%= (String)session.getAttribute(\"id\") %>" />
 				<c:choose>
 					<c:when test = "${hid == null }">
@@ -88,13 +89,13 @@
 						<div class=menu1><a href="">LogOut</a></div>
 					</c:otherwise>
 				</c:choose>		
-				<div class=menu1><a href="rBoard">문의</a></div>
+				<div class=menu1><a href="./rBoard">문의</a></div>
 				<div class=menu1><a href="">샘플</a></div>
 			</div>
 	 	</div><br><br>
 	 	<hr>
 	 	<div id='middle'>	 	
-	 		<form action="rWriteOk" id="reg_frm" method="post"  enctype="multipart/form-data"> 
+	 		<form action="./rWriteOk" id="reg_frm" method="post" enctype=multipart/form-data> 
 				<table class="table">
 					<tr>
 		      			<th scope="row" width ="10%">작성자</th>
@@ -114,24 +115,31 @@
 		      			<td><input type="text" id="rtitle" name="rtitle" size = "100%"></td>
 		      		</tr>
 		      		<tr>
-		      			<th scope="row" width ="10%">파일첨부</th>
+		      			<th scope="row" width="10%">파일첨부</th>
 		      			<td>
-		      				<input type="file" id="rfroot" name="rfroot" class=btn >      				
+		      				<input type="file" id="file" name="file" class=btn>
 		      			</td>
-		      		</tr>		      	
+		      		</tr>	      				      	
 			    	<tr>
 		    			<th scope="row" width ="10%">내용</th>
 		      			<td>
-		      				<textarea name="rcontent" id="rcontent" rows="10" style="width:100%"></textarea>
-		      				<script>
-		                        CKEDITOR.replace('rcontent');
-		                </script>
+		      				<textarea name="rcontent" id="rcontent" rows="10" style="width:100%"></textarea>		      				
+		      				<script>								
+							var ckeditor_config = {		
+							resize_enaleb : false,		
+							enterMode : CKEDITOR.ENTER_BR,		
+							shiftEnterMode : CKEDITOR.ENTER_P,		
+							filebrowserUploadUrl : "${pageContext.request.contextPath}/ckUpload"		
+							};		
+									
+							CKEDITOR.replace('rcontent', ckeditor_config);		
+							</script>		
 		      			</td>     
 		    		</tr>
 		    	</table>
     			<div class="write28">
 					<input type="submit" class="btn btn-dark" value="글쓰기">
-					<button type="button" onclick="location.href = 'rBoard';" class="btn btn-dark">취소</button>
+					<button type="button" onclick="location.href = './rBoard';" class="btn btn-dark">취소</button>
 				</div>	
     		</form>    		
 	 	</div>

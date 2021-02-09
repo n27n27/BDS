@@ -6,7 +6,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link href="./bootstrap.min.css" rel="stylesheet">
+<link href="./css/bootstrap.min.css" rel="stylesheet">
+<script src="http://code.jquery.com/jquery.js"></script>
 <title>BDS</title>
 	<style>			
 		
@@ -71,14 +72,49 @@
 		#middle{
 			width:85%;
 			margin:auto;
+		}		
+		
+		th{
+			width:10%;
 		}
-	</style>		
+	</style>
+	<script>
+		function form_check() {
+			submit_ajax();
+		}
+		
+		function submit_ajax(){
+			$.ajax({
+				url: "./check",
+				type: "post",
+				dataType: "text",
+				data: $("#check").serialize(),
+				error:function (xhr, status, error){
+					alert(error);
+				},
+				success: function (json){
+					var results = eval(json);
+					if(results[0].result=="ok")
+					{
+						alert(results[0].desc)	
+					}
+					else 
+					{
+						alert("전송실패")
+					}
+					
+				}
+			})
+		}
+		
+	</script>		
 </head>
 <body>
 	<div id=wrap>
 		<div id=header>
 			<div id="write27" ><a href='main'><img src='./img/home.png' width=20px>BDS</a></div>
 			<div class="write27">
+				<div class=menu1><a href="./first">Intro</a></div>
 				<c:set var="hid" value="<%= (String)session.getAttribute(\"id\") %>" />
 				<c:choose>
 					<c:when test = "${hid == null }">
@@ -94,11 +130,11 @@
 			</div>
 	 	</div><br><br>
 	 	<hr>
-	 	<div id='middle'>
+	 	<div id='middle'>	 		
 	 		<table class="table">
 		<tr>
-      		<th scope="row" width ="22%">작성자</th>
-      		<td width="22%">${dto.rname }</td>
+      		<th scope="row">작성자</th>
+      		<td>${dto.rname }</td>
       		<th scope="row" width ="22%">조회수</th>
       		<td width="22%">${dto.rhit }</td>
       	</tr>    	
@@ -109,7 +145,7 @@
       			<th scope="row" width ="10%">첨부파일</th>
       			<c:choose>
 					<c:when test = "${dto.rfroot != null }">
-						파일경로							
+						<td>파일경로</td>							
 					</c:when>
 					<c:otherwise>
 						<td></td>	
@@ -117,8 +153,8 @@
 				</c:choose>      			
       		</tr>	    	
     		<tr>
-    			<th scope="row" width ="50%" colspan="2">제목</th>
-      			<td width ="50%" colspan="2">${dto.rtitle}</td>     
+    			<th scope="row" width ="50%" colspan="1">제목</th>
+      			<td class="left" width ="50%" colspan="3">${dto.rtitle}</td>     
     		</tr>
     		<tr>
     			<th scope="row" colspan="4">내용</th>      			     
@@ -183,18 +219,21 @@
     	</c:if>
     	</table>
     	<div class="pm">
-    	<form class="pm1">
+    	<form id="check" class="pm1" onsubmit="form_check();">
+    		<input type="hidden" name="rnum" value="${dto.rnum }"/>
     		진행상황
     		&nbsp;
-    		<input type="radio" name=process> 미확인
-    		<input type="radio" name=process checked> 확인
-    		<input type="radio" name=process> 처리중
-    		<input type="radio" name=process> 완료
+    		<input type="radio" name=process value=1> 미확인
+    		<input type="radio" name=process value=2 checked> 확인
+    		<input type="radio" name=process value=3> 처리중
+    		<input type="radio" name=process value=4> 완료
     		<input type="submit" value="전송" class="btn btn-dark">
-    		&nbsp;&nbsp;
-    		    		    		    		
-    	</form>
-    		<input type="button" value="목록" onClick="location.href='/rBoard'"class="btn btn-dark">
+    		&nbsp;&nbsp;    		    		    		    		
+    	</form>    		
+    		<input type="button" value="목록" onClick="location.href='./rBoard?page=<%= session.getAttribute("cpage")%>'"class="btn btn-dark">
+    		<input type="button" value="답변" onClick="location.href='./replyView?rnum=${dto.rnum}'"class="btn btn-dark">
+    		<input type="button" value="수정" onClick="location.href='./rModify?rnum=${dto.rnum}'"class="btn btn-dark">
+    		<input type="button" value="삭제" onClick="location.href='./delete?rnum=${dto.rnum}'"class="btn btn-dark">
     	</div>
 	 	</div>
 	 	<hr>
