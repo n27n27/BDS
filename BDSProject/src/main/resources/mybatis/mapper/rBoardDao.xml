@@ -2,9 +2,17 @@
 <!DOCTYPE mapper
 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http:mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.study.dao.iRBoardDao">
+<mapper namespace="com.example.study.dao.IRBoardDao">
 	<select id = "list" resultType="com.example.study.dto.RBoardDto">
 		<![CDATA[select * from (select rownum num, A.* from (select * from r_board order by rgroup desc, rstep asc) A where rownum <= ${param2}) B where B.num >= ${param1}]]>
+	</select>	
+	
+	<select id="rCount" resultType="_int">
+		select count(*) from r_board where rindent = 0 and rprocessing != 4
+	</select>
+	
+	<select id="rList" resultType="com.example.study.dto.RBoardDto">		
+		<![CDATA[select * from (select rownum num, A.* from (select * from r_board where rindent = 0 and rprocessing != 4 order by rdate) A where rownum <= ${param2}) B where B.num >= ${param1}]]>
 	</select>
 	
 	<select id = "view" resultType="com.example.study.dto.RBoardDto">
@@ -16,17 +24,17 @@
 	</select>
 	
 	<insert id = "reply">
-		insert into r_board (rnum, rtitle, rContent, rGroup, rStep, rIndent, rPwd, rSecret, rdate)
-			values (r_board_seq.nextval, #{param1}, #{param2}, #{param3}, #{param4}, #{param5}, #{param6}, #{param7}, sysdate)
+		insert into r_board (rnum, rtitle, rContent, rGroup, rStep, rIndent, rdate, rname, rhit)
+			values (r_board_seq.nextval, #{param1}, #{param2}, #{param3}, #{param4}, #{param5}, sysdate, #{param6}, 0)
 	</insert>
 	
 	<insert id = "write" parameterType="java.util.HashMap">
 		insert into r_board (rNum, rTitle, rContent, rName, rPwd, rSecret, rdate, rhit, rGroup, rStep, rIndent, rProcessing, rfroot)
-			values (r_board_seq.nextval, #{rtitle}, #{rcontent}, #{rname}, #{rpwd}, #{rsecret}, sysdate, 0, r_board_seq.currval, 0, 0, 1, #{rfroot})
+			values (r_board_seq.nextval, #{rtitle}, #{rcontent}, #{rname}, #{rpwd}, #{rsecret}, sysdate, 0, r_board_seq.currval, 0, 0, 1, #{rfroot, jdbcType=VARCHAR})
 	</insert>
 	
 	<insert id = "modify" parameterType="java.util.HashMap">
-		update r_board set rTitle = #{rtitle}, rContent = #{rcontent}, rPwd = #{rpwd}, rSecret = #{rsecret}, rdate = sysdate where rNum = #{rnum}
+		update r_board set rTitle = #{rtitle}, rContent = #{rcontent}, rPwd = #{rpwd}, rSecret = #{rsecret}, rfroot = #{rfroot, jdbcType=VARCHAR}, rdate = sysdate where rNum = #{rnum}
 	</insert>
 	
 	<insert id = "upHit" parameterType="java.util.HashMap">
@@ -43,5 +51,6 @@
 	
 	<select id="articlePage" resultType="_int">
 		select count(*) from r_board
-	</select>
+	</select>	
+	
 </mapper>

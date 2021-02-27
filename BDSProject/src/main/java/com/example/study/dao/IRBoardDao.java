@@ -9,16 +9,18 @@ import org.apache.ibatis.annotations.Param;
 import com.example.study.dto.RBoardDto;
 
 @Mapper
-public interface iRBoardDao
-{	
-	//삭제(확실히), 변경(modify), 답글모양(replyShape), 답글뷰(reply_view),답글(reply), 조회수(uphit), 페이징
+public interface IRBoardDao
+{		
 	public List<RBoardDto> list(int nStart, int nEnd);
 	public RBoardDto view(@Param("rnum")String rnum);
 	public int write(Map<String, String> map);
 	public int delete(@Param("rnum")String rnum);	
 	public int upHit(String rnum);
 	public int modify(Map<String, String> map);
-	public int reply(String rtitle, String rcontent, int rgroup, int rstep, int rindent, String rpwd, String rsecret);
+	public int reply(String rtitle, String rcontent, int rgroup, int rstep, int rindent, String rname);
 	public int articlePage(int curPage);
 	public int check(int rprocessing, String rnum);	
+	public int rCount();
+	public List<RBoardDto> rList(int nStart, int nEnd);
+	public int articleCount(int curPage);	
 }

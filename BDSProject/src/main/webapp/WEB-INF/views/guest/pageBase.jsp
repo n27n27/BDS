@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../css/base.css">
 <title>BDS</title>
 	<style>			
 		
@@ -56,6 +57,11 @@
 		text-decoration:none;
 		color:black;
 		}
+		
+		#middle{
+			width:90%;
+			margin:auto;
+		}
 	</style>		
 </head>
 <body>
@@ -64,25 +70,48 @@
 			<div id="write27" ><a href='./main'><img src='./img/home.png' width=20px>BDS</a></div>
 			<div class="write27">
 				<div class=menu1><a href="./first">Intro</a></div>
-				<c:set var="hid" value="<%= (String)session.getAttribute(\"id\") %>" />
+				<c:set var="auth" value="<%= (String)session.getAttribute(\"usrauth\") %>" />
+				<c:set var="id" value="<%= (String)session.getAttribute(\"usrid\") %>" />
 				<c:choose>
-					<c:when test = "${hid == null }">
-						<div class=menu1><a href=''>Login</a></div>							
+					<c:when test = "${auth == null }">
+						<div class=menu1><a href='../security/clogin'>Login</a></div>							
 					</c:when>
 					<c:otherwise>
-						<div class=menu1>${hid} 님</div>
-						<div class=menu1><a href="">LogOut</a></div>
+					<div class=menu1>
+						<c:choose>
+							<c:when test = "${auth eq 'ROLE_ADMIN' }">
+							<div class="menu1 dropdown">
+								<a class="uname" href="../admin/manager">[관리자]님</a>	
+								<div class="hide">
+									<a href="./myinfo">내 정보</a>
+									<a href="../logout">로그아웃</a>
+								</div>
+							</div>	
+							</c:when>
+							<c:otherwise>
+								<div class="menu1 dropdown">
+									<a class="uname" href="./myinfo">[${id }]님</a>
+										<div class="hide">
+											<a href="./myinfo">내 정보</a>
+											<a href="../logout">로그아웃</a>
+										</div>
+									</div>
+							</c:otherwise>
+						</c:choose>
+					</div>						
 					</c:otherwise>
-				</c:choose>		
+				</c:choose>	
 				<div class=menu1><a href="./rBoard">문의</a></div>
-				<div class=menu1><a href="">샘플</a></div>
+				<div class=menu1><a href="./sList">샘플</a></div>
 			</div>
 	 	</div><br><br>
 	 	<hr>
+	 	<div id="middle">
 	 	
+	 	</div>
 	 	<hr>
 	 	<div id="footer">
-	 		<address>03189 서울 종로구 삼일대로17길 51
+	 		<address><a href="http://kko.to/Ht8jvZKYH">03189 서울 종로구 삼일대로17길 51</a>
 				 &emsp; TEL : 02-2222-2222
 				 &emsp; h.p : 010-5503-2731
 			</address>

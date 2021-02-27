@@ -5,4 +5,5 @@
 	<WatchedResource>WEB-INF/tomcat-web.xml</WatchedResource>
 	<WatchedResource>${catalina.base}/conf/web.xml</WatchedResource>
 	<Resource auth="Container" driverClassName="oracle.jdbc.driver.OracleDriver" maxActive="5" maxWait="5000" name="jdbc/Oracle11g" password="tiger" type="javax.sql.DataSource" url="jdbc:oracle:thin:@localhost:1521:xe" username="scott"/>	
+	<Resource auth="Container" driverClassName="oracle.jdbc.driver.OracleDriver" maxActive="5" maxWait="5000" name="jdbc/Oracle11g" password="tiger" type="javax.sql.DataSource" url="jdbc:oracle:thin:@localhost:1521:xe" username="scott"/>
 </Context>

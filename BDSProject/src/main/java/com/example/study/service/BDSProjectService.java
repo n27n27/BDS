@@ -3,10 +3,13 @@ package com.example.study.service;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.study.dao.iRBoardDao;
+import com.example.study.dao.INBoardDao;
+import com.example.study.dao.IRBoardDao;
+import com.example.study.dto.NBoardDto;
 import com.example.study.dto.RBoardDto;
 import com.example.study.dto.RPageDto;
 
@@ -14,12 +17,15 @@ import com.example.study.dto.RPageDto;
 public class BDSProjectService implements IBDSProjectService
 {
 	@Autowired
-	iRBoardDao dao;	
+	IRBoardDao dao;	
+	
+	@Autowired
+	INBoardDao nDao;
 	
 	@Autowired
 	RPageDto pdto;
 	
-	int listCount = 15;
+	int listCount = 10;
 	int pageCount = 10;
 
 	@Override
@@ -31,9 +37,22 @@ public class BDSProjectService implements IBDSProjectService
 	}
 	
 	@Override
+	public List<NBoardDto> nList()
+	{
+		return nDao.nList();
+	}
+	
+	@Override
 	public int check(int rprocessing, String rnum)
 	{
 		int nResult = dao.check(rprocessing, rnum);
+		return nResult;
+	}
+	
+	@Override
+	public int nUpHit(String nnum)
+	{
+		int nResult = nDao.upHit(nnum);
 		return nResult;
 	}
 	
@@ -42,6 +61,12 @@ public class BDSProjectService implements IBDSProjectService
 	{
 		int nResult = dao.upHit(rnum);
 		return nResult;
+	}
+	
+	@Override
+	public NBoardDto nView(@Param("nnum")String nnum)
+	{
+		return nDao.view(nnum);
 	}
 
 	@Override
@@ -58,10 +83,9 @@ public class BDSProjectService implements IBDSProjectService
 	}
 	
 	@Override
-	public int reply(String rtitle, String rcontent, int rgroup, int rstep, int rindent, String rpwd, String rsecret)
-	{
-		System.out.println("여기2");
-		int nResult = dao.reply(rtitle, rcontent, rgroup, rstep, rindent, rpwd, rsecret);
+	public int reply(String rtitle, String rcontent, int rgroup, int rstep, int rindent, String rname)
+	{		
+		int nResult = dao.reply(rtitle, rcontent, rgroup, rstep, rindent, rname);
 		return nResult;
 	}
 	
@@ -92,9 +116,9 @@ public class BDSProjectService implements IBDSProjectService
 		int endPage = startPage + pageCount - 1;
 		if(endPage > totalPage)
 			endPage = totalPage;
-		System.out.println(totalCount); 
+		 
 		pdto.setTotalCount(totalCount);
-		System.out.println(pdto.getTotalCount());
+		
 		pdto.setListCount(listCount);
 		pdto.setTotalPage(totalPage);
 		pdto.setCurPage(curPage);

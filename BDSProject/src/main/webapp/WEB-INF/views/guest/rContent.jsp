@@ -6,7 +6,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link href="./css/bootstrap.min.css" rel="stylesheet">
+<link href="../css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="../css/base.css">
 <script src="http://code.jquery.com/jquery.js"></script>
 <title>BDS</title>
 	<style>			
@@ -112,21 +113,42 @@
 <body>
 	<div id=wrap>
 		<div id=header>
-			<div id="write27" ><a href='main'><img src='./img/home.png' width=20px>BDS</a></div>
+			<div id="write27" ><a href='./main'><img src='../img/home.png' width=20px>BDS</a></div>
 			<div class="write27">
 				<div class=menu1><a href="./first">Intro</a></div>
-				<c:set var="hid" value="<%= (String)session.getAttribute(\"id\") %>" />
+				<c:set var="auth" value="<%= (String)session.getAttribute(\"usrauth\") %>" />
+				<c:set var="id" value="<%= (String)session.getAttribute(\"usrid\") %>" />
 				<c:choose>
-					<c:when test = "${hid == null }">
-						<div class=menu1><a href=''>Login</a></div>							
+					<c:when test = "${auth == null }">
+						<div class=menu1><a href='../security/clogin'>Login</a></div>							
 					</c:when>
 					<c:otherwise>
-						<div class=menu1>${hid} 님</div>
-						<div class=menu1><a href="">LogOut</a></div>
+					<div class=menu1>
+						<c:choose>
+							<c:when test = "${auth eq 'ROLE_ADMIN' }">
+							<div class="menu1 dropdown">
+								<a class="uname" href="../admin/manager">[관리자]님</a>	
+								<div class="hide">
+									<a href="./myinfo">내 정보</a>
+									<a href="../logout">로그아웃</a>
+								</div>
+							</div>	
+							</c:when>
+							<c:otherwise>
+								<div class="menu1 dropdown">
+									<a class="uname" href="./myinfo">[${id }]님</a>
+										<div class="hide">
+											<a href="./myinfo">내 정보</a>
+											<a href="../logout">로그아웃</a>
+										</div>
+									</div>
+							</c:otherwise>
+						</c:choose>
+					</div>						
 					</c:otherwise>
-				</c:choose>		
-				<div class=menu1><a href="rBoard">문의</a></div>
-				<div class=menu1><a href="">샘플</a></div>
+				</c:choose>	
+				<div class=menu1><a href="./rBoard">문의</a></div>
+				<div class=menu1><a href="./sList">샘플</a></div>
 			</div>
 	 	</div><br><br>
 	 	<hr>
@@ -143,14 +165,15 @@
       			<td>${dto.rdate}</td>
       			
       			<th scope="row" width ="10%">첨부파일</th>
+      			<td>
       			<c:choose>
 					<c:when test = "${dto.rfroot != null }">
-						<td>파일경로</td>							
+						<a href="./download?filename=${dto.rfroot}"><img width=20px src="../img/file.png"></a>							
 					</c:when>
-					<c:otherwise>
-						<td></td>	
+					<c:otherwise>							
 					</c:otherwise>
-				</c:choose>      			
+				</c:choose>
+				</td>      			
       		</tr>	    	
     		<tr>
     			<th scope="row" width ="50%" colspan="1">제목</th>
@@ -165,80 +188,47 @@
     			</td>      			     
     		</tr>   		
     	</table>
-    	<table>
-    	<c:if test = "${comments != null}">
-    		<c:forEach var="comment" items="${comments }">
-    			<tr id="qq">
-    				<td width=10%>${comment.cId }</td>
-    				<td width=70%>${comment.cContent }</td>
-    				
-					<td width=20%>
-						<div>
-							<form action="cReply.fo" method="post">
-								<input type="hidden" name="bNum" value="${fcontent_view.bNum }">
-    							<input type="hidden" name="bId" value="${hid}"> 
-								<input type="hidden" name="cGroup" value="${comment.cGroup}">
-	    						<input type="hidden" name="cStep" value="${comment.cStep}">
-	    						<input type="hidden" name="cIndent" value="${comment.cIndent}">
-																							
-								
-							</form>
-							<c:if test="${comment.cId == hid }">
-							<input type="button"  class="btn btn-secondary btn-sm" onclick="click1();" value="답변">
-							<a href="#" class="btn btn-secondary btn-sm">수정</a>
-							<a href="#" class="btn btn-secondary btn-sm">삭제</a>
-							</c:if>
-							
-						</div>
-					</td>   				
-    			</tr>
-    			
-    		</c:forEach>
-    		
-    		<c:if test="${hid != null }">
-    			<form action ="fcWrite.fo" id="fComment" method="post">
-    				<tr>    				
-    					<input type="hidden" name="bNum" value="${fcontent_view.bNum }" />
-    					<input type="hidden" name="bId" value="${hid}" />
-    					<input type="hidden" name="cGroup" value="${comment.cGroup}" />
-    					<input type="hidden" name="cStep" value="${comment.cStep}" />
-    					<input type="hidden" name="cIndent" value="${comment.cIndent}" />    					
-    					
-    					<td>
-    						${hid }
-    					</td>
-    					<td>
-    						<input name="cContent" type="text" size=70% > 
-    					</td>
-    					<td>
-    						<input type="submit" class="btn btn-dark" value="댓글등록">
-    					</td>    				
-    				</tr>
-    			</form>	
-    		</c:if>
-    	</c:if>
-    	</table>
+    	
     	<div class="pm">
-    	<form id="check" class="pm1" onsubmit="form_check();">
-    		<input type="hidden" name="rnum" value="${dto.rnum }"/>
-    		진행상황
-    		&nbsp;
-    		<input type="radio" name=process value=1> 미확인
-    		<input type="radio" name=process value=2 checked> 확인
-    		<input type="radio" name=process value=3> 처리중
-    		<input type="radio" name=process value=4> 완료
-    		<input type="submit" value="전송" class="btn btn-dark">
-    		&nbsp;&nbsp;    		    		    		    		
-    	</form>    		
+    	<c:choose>
+			<c:when test = "${auth eq 'ROLE_ADMIN' }">
+				<form id="check" class="pm1" onsubmit="form_check();">
+	    			<input type="hidden" name="rnum" value="${dto.rnum }"/>
+	    				진행상황
+	    				&nbsp;
+	    			<input type="radio" name=process value=1> 미확인
+	  	  			<input type="radio" name=process value=2 checked> 확인
+	    			<input type="radio" name=process value=3> 처리중
+	    			<input type="radio" name=process value=4> 완료
+	    			<input type="submit" value="전송" class="btn btn-dark">
+	    				&nbsp;&nbsp;    		    		    		    		
+    			</form>	
+			</c:when>
+			<c:otherwise>				
+			</c:otherwise>
+		</c:choose>    	    		
     		<input type="button" value="목록" onClick="location.href='./rBoard?page=<%= session.getAttribute("cpage")%>'"class="btn btn-dark">
-    		<input type="button" value="답변" onClick="location.href='./replyView?rnum=${dto.rnum}'"class="btn btn-dark">
-    		<input type="button" value="수정" onClick="location.href='./rModify?rnum=${dto.rnum}'"class="btn btn-dark">
+    		
+    		<c:choose>
+					<c:when test = "${id != null }">
+						
+						<c:choose>
+							<c:when test = "${id eq dto.rname }">
+								<input type="button" value="수정" onClick="location.href='./rModify?rnum=${dto.rnum}'"class="btn btn-dark">
     		<input type="button" value="삭제" onClick="location.href='./delete?rnum=${dto.rnum}'"class="btn btn-dark">
+							</c:when>
+						</c:choose>
+    									
+					</c:when>
+					<c:otherwise>											
+					</c:otherwise>
+				</c:choose>
+    		
     	</div>
 	 	</div>
 	 	<hr>
 	 	<div id="footer">
-	 		<address>03189 서울 종로구 삼일대로17길 51
+	 		<address><a href="http://kko.to/Ht8jvZKYH">03189 서울 종로구 삼일대로17길 51</a>
 				 &emsp; TEL : 02-2222-2222
 				 &emsp; h.p : 010-5503-2731
 			</address>

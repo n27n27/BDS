@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http:mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.study.dao.INBoardDao">
+	<select id = "nList" resultType="com.example.study.dto.NBoardDto">
+		<![CDATA[select rownum num, A.* from (select * from n_board order by nnum desc) A where rownum < 4]]>
+	</select>
+	
+	<select id="nList1" resultType="com.example.study.dto.NBoardDto">		
+		<![CDATA[select * from (select rownum num, A.* from (select * from n_board order by nnum desc) A where rownum <= ${param2}) B where B.num >= ${param1}]]>
+	</select>
+	
+	<select id = "requestStyle" resultType="com.example.study.dto.NBoardDto">
+		select * from n_board where nnum = 1
+	</select>
+	
+	<insert id = "upHit" parameterType="java.util.HashMap">
+		update n_board set nhit = nhit + 1 where nnum = #{nnum}
+	</insert>
+	
+	<select id = "view" resultType="com.example.study.dto.NBoardDto">
+		select * from n_board where nNum = #{nnum}
+	</select>
+	
+	<insert id = "write" parameterType="java.util.HashMap">
+		insert into n_board (nNum, nTitle, nContent, nName, ndate, nhit, nfroot) values (n_board_seq.nextval, #{ntitle}, #{ncontent}, #{nname}, sysdate, 0, #{nfroot, jdbcType=VARCHAR})
+	</insert>
+	
+	<select id="articleCount" resultType="_int">
+		select count(*) from n_board
+	</select>
+</mapper>

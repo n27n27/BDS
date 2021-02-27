@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.study.dao.ISBoardDao"> 
+	<select id="sList" resultType="com.example.study.dto.SBoardDto">
+		select * from s_board order by sdate desc
+	</select>
+	
+	<insert id = "sWrite" parameterType="java.util.HashMap">
+		insert into s_board (snum, usrid, stitle, scontent, sdate, shit)
+			values (s_board_seq.nextval, #{usrid}, #{stitle}, #{scontent}, sysdate, 0)
+	</insert>
+	
+	<insert id = "sHit" parameterType="java.util.HashMap">
+		update s_board set shit = shit + 1 where snum = #{snum} and usrid !=#{usrid}
+	</insert>
+	
+	<select id = "sView" resultType="com.example.study.dto.SBoardDto">
+		select * from s_board where snum = #{snum}
+	</select>
+	
+	<delete id = "sDelete">
+		delete from s_board where snum = #{snum}
+	</delete>
+	
+	<update id="sModify" parameterType="java.util.HashMap"> 
+		update s_board set stitle = #{stitle}, scontent = #{scontent} where snum = #{snum}
+	</update>
+	
+	<!--  
+
+		
+	
+	
+			
+	<select id = "smodifyView" resultType="com.study.springboot.DTO.sboardDTO">
+		select * from r_board where snum = #{snum}
+	</select>
+		
+	<delete id = "sDelete" parameterType="java.util.HashMap">
+		delete from s_board where snum = #{snum}
+	</delete>
+	
+	
+
+	
+	
+	
+	<delete id = "delete" parameterType="java.util.HashMap">
+		delete from s_board where sNum = #{snum}
+	</delete>
+	
+	<select id="articlePage" resultType="_int">
+		select count(*) from r_board
+	</select>
+	-->
+</mapper>
